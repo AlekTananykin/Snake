@@ -1,7 +1,9 @@
 using Assets.Code.Exceptions;
-using Assets.Code.Models;
+
 using Assets.Code.PlayerInput;
-using Assets.Code.SaveLoad;
+using Assets.Code.ViewModels;
+using Assets.Code.Views;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,21 +12,18 @@ namespace Assets.Code.Controllers
     public sealed class GameController : MonoBehaviour
     {
         private ControllersStorage _storage;
-
         private IPlayerInput _playerInput;
 
-        private uint _piratesCount = 1200;
 
         void Start()
         {
             try
             {
-
+                _storage = new ControllersStorage();
                 _playerInput = new PlayerPcInput();
-                new InitGame(_controllersStorage, gameModel,
-                    _playerInput, _savedGamesPath);
+                InitGame(_storage, _playerInput);
 
-                _controllersStorage.Initialize();
+                _storage.Initialize();
             }
             catch (GameException ex)
             {
@@ -33,18 +32,22 @@ namespace Assets.Code.Controllers
             }
         }
 
-        void Update()
+        private void InitGame(ControllersStorage storage, IPlayerInput playerInput)
         {
-            _controllersStorage.Execute(Time.deltaTime);
-        }
-        private void LateUpdate()
-        {
-            _controllersStorage.LateExecute(Time.deltaTime);
+            SnakeViewModel viewModel = new SnakeViewModel(playerInput);
+
+            storage.Add(viewModel);
+
         }
 
+        void Update()
+        {
+            _storage.Execute(Time.deltaTime);
+        }
+       
         public void OnDestroy()
         {
-            _controllersStorage.Cleanup();
+            _storage.Cleanup();
         }
 
  
