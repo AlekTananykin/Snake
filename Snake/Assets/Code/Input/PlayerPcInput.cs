@@ -13,5 +13,6 @@ namespace Assets.Code.PlayerInput
         public bool Right => Input.GetKey(KeyCode.D);
         public bool Top => Input.GetKey(KeyCode.W);
         public bool Bottom => Input.GetKey(KeyCode.S);
+        public bool IsCreateLink => Input.GetKeyDown(KeyCode.L);
     }
 }

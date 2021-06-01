@@ -27,7 +27,9 @@ namespace Assets.Code.ViewModels
 
         public void Execute(float deltaTime)
         {
-            _model.ProcessSpeed();
+            if (_model.IsCreateLink())
+                _tail.Add(CreateLink(_head.transform.position));
+
             Vector3 headPrevPosition = _head.transform.position;
             _head.transform.position = _model.GetHeadPosition(headPrevPosition, deltaTime);
 
@@ -35,7 +37,7 @@ namespace Assets.Code.ViewModels
             if (Vector3.Distance(neckPosition, _head.transform.position) < _linkSize)
                 return;
 
-            for (int i = 0; i < _tail.Count - 2; ++i)
+            for (int i = 0; i < _tail.Count - 1; ++i)
             {
                 _tail[i].transform.position = _model.GetLinkPosition(
                     _tail[i].transform.position,
@@ -51,7 +53,7 @@ namespace Assets.Code.ViewModels
         {
             _head = CreateLink(new Vector3(10, 1, 10));
 
-            GameObject link = CreateLink(new Vector3(10, 10, 10));
+            GameObject link = CreateLink(new Vector3(10, 1, 2));
             _tail.Add(link);
         }
 

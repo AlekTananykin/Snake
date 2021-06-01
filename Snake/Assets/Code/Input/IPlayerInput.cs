@@ -13,7 +13,7 @@ namespace Assets.Code.PlayerInput
         bool Right { get; }
         bool Top { get; }
         bool Bottom { get; }
-
+        bool IsCreateLink { get; }
 
     }
 }
