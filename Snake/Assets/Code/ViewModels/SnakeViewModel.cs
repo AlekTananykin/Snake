@@ -32,6 +32,7 @@ namespace Assets.Code.ViewModels
 
             Vector3 headPrevPosition = _head.transform.position;
             _head.transform.position = _model.GetHeadPosition(headPrevPosition, deltaTime);
+            Position(_head.transform.position);
 
             Vector3 neckPosition = _tail.Last().transform.position;
             if (Vector3.Distance(neckPosition, _head.transform.position) < _linkSize)
@@ -69,5 +70,12 @@ namespace Assets.Code.ViewModels
             view.transform.position = position;
             return view;
         }
+
+        internal Vector3 GetPosition()
+        {
+            return _head.transform.position;
+        }
+
+        internal Action<Vector3> Position;
     }
 }

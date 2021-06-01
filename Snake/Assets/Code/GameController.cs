@@ -13,7 +13,10 @@ namespace Assets.Code.Controllers
     {
         private ControllersStorage _storage;
         private IPlayerInput _playerInput;
+        private ViewsFabric _viewsFabric;
 
+        private SnakeViewModel _snake;
+        private CameraViewModel _camera;
 
         void Start()
         {
@@ -21,7 +24,9 @@ namespace Assets.Code.Controllers
             {
                 _storage = new ControllersStorage();
                 _playerInput = new PlayerPcInput();
-                InitGame(_storage, _playerInput);
+                _viewsFabric = new ViewsFabric();
+
+                InitGame(_storage, _playerInput, _viewsFabric);
 
                 _storage.Initialize();
             }
@@ -32,12 +37,17 @@ namespace Assets.Code.Controllers
             }
         }
 
-        private void InitGame(ControllersStorage storage, IPlayerInput playerInput)
+        private void InitGame(ControllersStorage storage, 
+            IPlayerInput playerInput, ViewsFabric viewFabric)
         {
-            SnakeViewModel viewModel = new SnakeViewModel(playerInput);
+            _snake = new SnakeViewModel(playerInput);
+            storage.Add(_snake);
 
-            storage.Add(viewModel);
+            _camera = new CameraViewModel(viewFabric);
+           // _camera.SetPosition(_snake.GetPosition());
+            storage.Add(_camera);
 
+            _snake.Position += _camera.SetPosition;
         }
 
         void Update()
@@ -48,6 +58,7 @@ namespace Assets.Code.Controllers
         public void OnDestroy()
         {
             _storage.Cleanup();
+            _snake.Position -= _camera.SetPosition;
         }
 
  
