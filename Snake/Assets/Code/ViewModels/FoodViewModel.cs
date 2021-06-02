@@ -9,14 +9,11 @@ using UnityEngine;
 
 namespace Assets.Code.ViewModels
 {
-    class FoodViewModel : IInitialization, ICleanup
+    class FoodViewModel : IInitialization
     {
         private FoodModel _model;
         private GameObject _view;
 
-        public void Cleanup()
-        {
-        }
 
         public void Initialize()
         {
