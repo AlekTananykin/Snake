@@ -18,7 +18,8 @@ namespace Assets.Code.Models
             _input = input;
         }
 
-        internal Vector3 GetHeadPosition(Vector3 position, float deltaTime)
+        internal Vector3 GetHeadPosition(
+            Vector3 position, float deltaTime)
         {
             float speedX = 0;
             float speedZ = 0;
@@ -45,7 +46,8 @@ namespace Assets.Code.Models
                 deltaTime * Vector3.ClampMagnitude(speed, _snakeSpeed);
         }
 
-        internal Vector3 GetLinkPosition(Vector3 position, Vector3 nextPosition, float deltaTime)
+        internal Vector3 GetLinkPosition(
+            Vector3 position, Vector3 nextPosition, float deltaTime)
         {
             Vector3 speed = nextPosition - position;
             return position +
