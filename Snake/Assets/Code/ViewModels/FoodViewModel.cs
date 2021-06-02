@@ -9,11 +9,22 @@ using UnityEngine;
 
 namespace Assets.Code.ViewModels
 {
+<<<<<<< HEAD
     class FoodViewModel : IInitialization
+=======
+    class FoodViewModel : IInitialization, ICleanup
+>>>>>>> f8bc5d74e33dee40e11c2410899bcee682774704
     {
         private FoodModel _model;
         private GameObject _view;
 
+<<<<<<< HEAD
+=======
+        public void Cleanup()
+        {
+        }
+
+>>>>>>> f8bc5d74e33dee40e11c2410899bcee682774704
         public void Initialize()
         {
             _model = new FoodModel();

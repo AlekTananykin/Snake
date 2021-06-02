@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets.Code.ViewModels
 {
-    class SnakeViewModel : IExecute, IInitialization
+    class SnakeViewModel : IExecute, IInitialization, ICleanup
     {
         private List<GameObject> _tail = new List<GameObject>();
         private GameObject _head;
@@ -91,6 +91,10 @@ namespace Assets.Code.ViewModels
         internal Vector3 GetPosition()
         {
             return _head.transform.position;
+        }
+
+        public void Cleanup()
+        {
         }
 
         internal Action<Vector3> Position;
