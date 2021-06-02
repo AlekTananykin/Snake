@@ -44,8 +44,11 @@ namespace Assets.Code.Controllers
             storage.Add(_snake);
 
             _camera = new CameraViewModel(viewFabric);
-           // _camera.SetPosition(_snake.GetPosition());
+           //_camera.SetPosition(_snake.GetPosition());
             storage.Add(_camera);
+
+            FoodViewModel food = new FoodViewModel();
+            storage.Add(food);
 
             _snake.Position += _camera.SetPosition;
         }

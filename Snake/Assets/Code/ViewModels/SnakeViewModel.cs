@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets.Code.ViewModels
 {
-    class SnakeViewModel : IExecute, IInitialization
+    class SnakeViewModel : IExecute, IInitialization, ICleanup
     {
         private List<GameObject> _tail = new List<GameObject>();
         private GameObject _head;
@@ -52,10 +52,26 @@ namespace Assets.Code.ViewModels
 
         public void Initialize()
         {
-            _head = CreateLink(new Vector3(10, 1, 10));
+            _head = CreateLink(new Vector3(10, 1, 3));
+            SnakeHeadScript headScript = _head.AddComponent<SnakeHeadScript>();
+            headScript._onTirggerEnter += CollisionOccured;
 
             GameObject link = CreateLink(new Vector3(10, 1, 2));
             _tail.Add(link);
+        }
+
+        private void CollisionOccured(Collider obj)
+        {
+            if (obj.gameObject.TryGetComponent(out IFood food))
+            {
+                _tail.Add(CreateLink(_head.transform.position));
+                FoodEaten?.Invoke();
+            }
+            else
+            {
+                Dead?.Invoke();
+                Debug.Log("GameOver");
+            }
         }
 
         GameObject CreateLink(Vector3 position)
@@ -71,11 +87,18 @@ namespace Assets.Code.ViewModels
             return view;
         }
 
+
         internal Vector3 GetPosition()
         {
             return _head.transform.position;
         }
 
+        public void Cleanup()
+        {
+        }
+
         internal Action<Vector3> Position;
+        internal Action FoodEaten;
+        internal Action Dead;
     }
 }
